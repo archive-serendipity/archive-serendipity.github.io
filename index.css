@@ -1,0 +1,94 @@
+html, body {
+  margin:0;
+}
+header, footer, main, nav, navtwo, p {
+  font-family: Manrope;
+  margin: 5px;
+  padding: 5px;
+  border-radius: 5px;
+  min-height: 120px;
+  /* border: 1px solid white; */
+  background: transparent;
+}
+footer {
+  order: 2;
+}
+nav {
+  order: 1;
+  scrollbar-width: thin;
+  scrollbar-color: #55ec0f #e0e0e0;
+}
+
+navtwo {
+  order: 3;
+  scrollbar-width: thin;
+  scrollbar-color: #6969dd #e0e0e0;
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  scrollbar-width: thin;
+  scrollbar-color: #f100d1 #e0e0e0;
+}
+
+
+
+
+
+
+@media only screen and (orientation: landscape) {
+
+  main div {
+    /* height: 100px; */
+    /* border: 1px dashed red; */
+    padding-top: 20%;
+  }
+  nav div {
+    /* height: 800px; */
+    /* border: 1px dashed red; */
+    padding: 10%;
+  }
+
+  navtwo div {
+    /* height: 800px; */
+    /* border: 1px dashed red; */
+    padding: 10%;
+  }
+
+
+
+  body.landscape {
+    display: flex;
+  }
+  section {
+    display: block;
+    width: calc(33% - 10px);         /*  10px is for the margin  */
+    box-sizing: border-box;
+    max-height: calc(100vh - 20px);
+    overflow: auto;
+  }
+  nav {
+    width: calc(33% - 10px);         /*  10px is for the margin  */
+    box-sizing: border-box;
+    max-height: calc(100vh - 20px);
+    overflow: auto;
+  }
+  navtwo {
+    width: calc(33% - 10px);         /*  10px is for the margin  */
+    box-sizing: border-box;
+    max-height: calc(100vh - 20px);
+    overflow: auto;
+  }
+  .spe{
+    font-family: 'Stix Two Text';
+    font-style: italic;
+    font-size: 48px;
+  }
+
+  .secHead{
+    font-size: 24px;
+    font-style: italic;
+  }
+
+}

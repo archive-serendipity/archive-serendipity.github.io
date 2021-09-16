@@ -1,0 +1,11 @@
+body,p {
+    text-align: justify;
+    font-family: Manrope;
+    font-size: medium;
+    padding: 100px;
+}
+
+.headerborder{
+    width: 143px;
+    border-bottom: 5px solid black;
+}
