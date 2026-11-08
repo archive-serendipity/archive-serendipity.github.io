@@ -4,19 +4,19 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap">
 <style>
 :root{
-  /* Layout: one hard-bordered frame on a visible 7-column grid, zero gutter. Column lines run the full height of the frame; every row (hero, tabs, tables, cells, footer) is split on those same 7 columns. */
-  --bg:#0b0c0f;
-  --panel:#12141a;
-  --line:#2e3340;
-  --line-strong:#5d6477;
-  --col:rgba(169,180,255,.26);
-  --col-solid:#363c6b;
-  --fg:#ececf0;
-  --dim:#9ba1b2;
-  --accent:#4f5fff;
-  --accent-text:#a9b4ff;
-  --paper:#ececf0;
-  --ink:#0b0c0f;
+  /* Layout: one hard-bordered frame on a visible 7-column grid, zero gutter. Column lines run the full height of the frame; every row (hero, tabs, tables, footer) is split on those same 7 columns. Light theme only: yellowish gray ground, black type, one blue accent. */
+  --bg:#e4e1d0;
+  --panel:#d9d6c3;
+  --line:#b8b59f;
+  --line-strong:#8c8973;
+  --col:rgba(35,71,245,.2);
+  --col-solid:#a3abd6;
+  --fg:#111111;
+  --dim:#4f4d3b;
+  --accent:#2347f5;
+  --accent-soft:#c5cffa;
+  --inv-bg:#111111;
+  --inv-fg:#e4e1d0;
   --mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,"Liberation Mono",monospace;
   --fs-xs:11px;
   --fs-sm:12.5px;
@@ -25,7 +25,7 @@
   --fs-lg:clamp(1.25rem,3vw,1.75rem);
   --fs-xl:clamp(1.6rem,5vw,3rem);
   --fs-hero:clamp(2rem,10.5vw,6.5rem);
-  color-scheme:dark;
+  color-scheme:light;
 }
 *{box-sizing:border-box}
 body{
@@ -37,9 +37,11 @@ body{
 }
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:40;background:var(--bg)}
 ::selection{background:var(--accent);color:#fff}
-:focus-visible{outline:3px solid var(--accent-text);outline-offset:-3px}
-h1,h2,h3,p{margin:0}
-h1,h2,h3{text-wrap:balance}
+:focus-visible{outline:3px solid var(--fg);outline-offset:-3px}
+h1,h2,p{margin:0}
+h1,h2{text-wrap:balance}
+a{color:var(--accent);text-decoration:underline;text-underline-offset:3px}
+a:hover{background:var(--accent);color:#fff;text-decoration:none}
 
 .page{
   padding-block:24px 40px;
@@ -60,10 +62,9 @@ h1,h2,h3{text-wrap:balance}
   display:grid;grid-template-columns:repeat(7,minmax(0,1fr));
   background:var(--panel);border-bottom:2px solid var(--fg);
 }
-.ruler>span{padding:6px 8px;font-size:var(--fs-xs);font-weight:700;letter-spacing:.1em;color:var(--accent-text);border-right:1px solid var(--col-solid);white-space:nowrap;overflow:hidden}
+.ruler>span{padding:6px 8px;font-size:var(--fs-xs);font-weight:700;letter-spacing:.1em;color:var(--dim);border-right:1px solid var(--col-solid);white-space:nowrap;overflow:hidden}
 .ruler>span:last-child{border-right:0}
-.ruler .cl{color:var(--dim);font-weight:400}
-@media(max-width:759px){.ruler .cl{display:none}.ruler>span{padding-inline:4px;text-align:center}}
+@media(max-width:759px){.ruler>span{padding-inline:4px;text-align:center}}
 
 /* top strip */
 .strip{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--line);border-bottom:2px solid var(--fg)}
@@ -78,9 +79,9 @@ h1{
   font-size:var(--fs-hero);font-weight:800;line-height:.95;letter-spacing:-.045em;text-transform:uppercase;
   display:flex;flex-direction:column;align-items:flex-start;
 }
-h1 .inv{background:var(--paper);color:var(--ink);padding:0 .1em;margin-left:-.05em}
+h1 .inv{background:var(--accent);color:#fff;padding:0 .1em;margin-left:-.05em}
 .hero>.lede{font-size:var(--fs-md);padding-top:0}
-.cursor{display:inline-block;width:.6em;height:1.05em;background:var(--accent-text);vertical-align:-.2em;margin-left:4px;animation:blink 1.1s steps(1) infinite}
+.cursor{display:inline-block;width:.6em;height:1.05em;background:var(--accent);vertical-align:-.2em;margin-left:4px;animation:blink 1.1s steps(1) infinite}
 @keyframes blink{50%{opacity:0}}
 @media(prefers-reduced-motion:reduce){.cursor{animation:none}}
 @media(min-width:900px){
@@ -89,11 +90,10 @@ h1 .inv{background:var(--paper);color:var(--ink);padding:0 .1em;margin-left:-.05
   .hero>.lede{grid-column:5/8;align-self:end}
 }
 
-.meta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--line);border-top:2px solid var(--fg)}
+.meta{display:grid;grid-template-columns:minmax(0,1fr);gap:1px;background:var(--line);border-top:2px solid var(--fg)}
 .meta>div{background:var(--bg);padding:12px 16px;display:grid;gap:2px;align-content:start}
 .k{font-size:var(--fs-xs);letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
-.v{font-weight:700}
-@media(min-width:900px){.meta{grid-template-columns:2fr 1fr 2fr 2fr;gap:0;background:none}}
+@media(min-width:900px){.meta{grid-template-columns:2fr 2fr 3fr;gap:0;background:none}}
 
 /* tabs */
 .tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--line);border-top:2px solid var(--fg);border-bottom:2px solid var(--fg)}
@@ -104,142 +104,55 @@ h1 .inv{background:var(--paper);color:var(--ink);padding:0 .1em;margin-left:-.05
   padding:14px 16px;min-height:76px;display:flex;flex-direction:column;justify-content:space-between;gap:10px;
 }
 .tab .mark{font-weight:500;color:var(--dim);letter-spacing:0}
-.tab:hover{background:var(--paper);color:var(--ink)}
-.tab:hover .mark{color:var(--ink)}
+.tab:hover{background:var(--accent-soft);color:var(--fg)}
+.tab:hover .mark{color:var(--fg)}
 .tab[aria-selected="true"]{background:var(--accent);color:#fff}
 .tab[aria-selected="true"] .mark{color:#fff}
 @media(min-width:900px){.tabs{grid-template-columns:2fr 2fr 1fr 2fr;gap:0;background:none}}
 
-/* shared blocks */
+/* panels */
+.blank{min-height:320px}
 .phead{display:grid;grid-template-columns:minmax(0,1fr)}
-.phead>h2{padding:24px 16px 8px}
-.phead>.lead{padding:8px 16px 24px}
+.phead>h2{padding:24px 16px}
 @media(min-width:760px){
   .phead{grid-template-columns:repeat(7,minmax(0,1fr))}
-  .phead>h2{grid-column:1/5;padding-block:clamp(24px,4vw,40px)}
-  .phead>.lead{grid-column:5/8;align-self:end;padding-block:clamp(24px,4vw,40px)}
+  .phead>h2{grid-column:1/8;padding-block:clamp(24px,4vw,40px)}
 }
 h2{font-size:var(--fs-xl);font-weight:800;line-height:1;letter-spacing:-.04em;text-transform:uppercase}
-.lead{font-size:var(--fs-md);max-width:64ch}
-.dim{color:var(--dim)}
 .bar{
   display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 16px;
-  padding:8px 16px;background:var(--paper);color:var(--ink);
+  padding:8px 16px;background:var(--inv-bg);color:var(--inv-fg);
   font-size:var(--fs-xs);font-weight:700;letter-spacing:.1em;text-transform:uppercase;
   border-top:2px solid var(--fg);
 }
-@media(min-width:760px){
-  .bar{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:0;padding:0}
-  .bar>*{padding:8px 16px}
-  .bar>:first-child{grid-column:1/5}
-  .bar>:last-child{grid-column:5/8}
-}
-.chip{display:inline-block;border:1px solid var(--line-strong);padding:1px 7px;font-size:var(--fs-xs);letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
 
-/* cells: spans of 7 columns */
-.cells{border-top:1px solid var(--line)}
-.cells>*{padding:18px 16px;min-width:0;box-shadow:inset 0 -1px 0 var(--line)}
+/* about the studio: two paragraphs on the 7 columns */
+.about{display:grid;grid-template-columns:minmax(0,1fr);border-top:1px solid var(--line)}
+.about>p{padding:24px 16px;font-size:var(--fs-md);line-height:1.7;text-wrap:pretty}
+.about>p+p{padding-top:0}
 @media(min-width:760px){
-  .cells{display:grid;grid-template-columns:repeat(7,minmax(0,1fr))}
-  .s223>:nth-child(1),.s223>:nth-child(2){grid-column:span 2}
-  .s223>:nth-child(3){grid-column:span 3}
-  .s34>:nth-child(4n+1),.s34>:nth-child(4n+4){grid-column:span 3}
-  .s34>:nth-child(4n+2),.s34>:nth-child(4n+3){grid-column:span 4}
-  .s6>:nth-child(6n+1),.s6>:nth-child(6n+2),.s6>:nth-child(6n+5),.s6>:nth-child(6n+6){grid-column:span 2}
-  .s6>:nth-child(6n+3),.s6>:nth-child(6n+4){grid-column:span 3}
+  .about{grid-template-columns:repeat(7,minmax(0,1fr))}
+  .about>p:first-child{grid-column:1/5;padding-block:32px}
+  .about>p:last-child{grid-column:5/8;padding-block:32px}
 }
-.big{font-size:var(--fs-lg);font-weight:800;letter-spacing:-.03em;line-height:1.1;text-transform:uppercase}
-.cells h3{font-size:var(--fs-md);font-weight:700;line-height:1.3;margin-block:8px 6px}
 
 /* table rows: column templates add up to 7fr */
 .trow{display:grid;grid-template-columns:minmax(0,1fr);border-top:1px solid var(--line)}
 .trow>*{padding:14px 16px;min-width:0}
 .thead{font-size:var(--fs-xs);letter-spacing:.1em;text-transform:uppercase;color:var(--dim);background:var(--panel)}
 .thead>*{padding-block:8px}
-.tag{font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--accent-text)}
-.strong{color:var(--accent-text)}
-.wkc{display:flex;flex-direction:column;background:var(--panel)}
-.wk-l{font-size:var(--fs-xs);letter-spacing:.1em;color:var(--dim)}
-.wk-n{font-size:var(--fs-lg);font-weight:800;letter-spacing:-.03em;line-height:1;color:var(--accent-text)}
-.cols-weeks{--cols:minmax(0,1fr) minmax(0,2fr) minmax(0,2fr) minmax(0,2fr)}
-.cols-anat{--cols:minmax(0,1fr) minmax(0,2fr) minmax(0,4fr)}
-.cols-cmp{--cols:minmax(0,1fr) minmax(0,3fr) minmax(0,3fr)}
-.cols-book{--cols:minmax(0,1fr) minmax(0,3fr) minmax(0,2fr) minmax(0,1fr)}
+.date{font-weight:700;letter-spacing:.02em}
+.cols-plan{--cols:minmax(0,2fr) minmax(0,2fr) minmax(0,2fr) minmax(0,1fr)}
 @media(min-width:760px){.trow{grid-template-columns:var(--cols)}}
 @media(max-width:759px){
   .trow>*{padding:6px 16px}
   .trow>*:first-child{padding-top:12px}
   .trow>*:last-child{padding-bottom:14px}
   .thead{display:none}
+  .trow>div:empty{display:none}
   .trow>[data-label]::before{content:attr(data-label);display:block;font-size:var(--fs-xs);letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
-  .wkc{flex-direction:row;align-items:baseline;gap:8px}
 }
-
-/* modules */
-.mod{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:8px 24px;padding:16px;background:var(--panel);border-top:2px solid var(--fg)}
-.mod .big{margin-top:2px}
-.mod .r{font-size:var(--fs-sm)}
-@media(min-width:760px){
-  .mod{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:0;padding:0;align-items:end}
-  .mod>*{padding:16px}
-  .mod>:first-child{grid-column:1/5}
-  .mod>.r{grid-column:5/8}
-}
-
-/* assessment */
-.asm{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 16px;padding:14px 16px;border-top:1px solid var(--line)}
-.asm .nm{font-weight:700}
-.asm .pct{font-size:var(--fs-lg);font-weight:800;letter-spacing:-.03em;line-height:1}
-.asm .ds{grid-column:1/-1;color:var(--dim)}
-.track{grid-column:1/-1;height:12px;border:1px solid var(--line-strong);background:var(--panel);margin-top:4px}
-.fill{height:100%;width:var(--w);background:var(--accent)}
-.asm.total{background:var(--panel);font-weight:700;text-transform:uppercase;letter-spacing:.08em;font-size:var(--fs-sm)}
-@media(min-width:760px){
-  .asm{grid-template-columns:repeat(7,minmax(0,1fr));gap:0;padding:0}
-  .asm>.nm{grid-area:1/1/2/4;padding:14px 16px 6px}
-  .asm>.ds{grid-area:1/4/2/7;padding:14px 16px 6px}
-  .asm>.pct{grid-area:1/7/2/8;padding:14px 16px 6px;text-align:right}
-  .asm>.track{grid-area:2/1/3/8;margin:4px 16px 16px}
-  .asm.total>.nm,.asm.total>.pct{padding-bottom:14px}
-}
-
-/* bookshelf */
-.filters{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:12px 16px;border-top:1px solid var(--line)}
-.filters .count{margin-left:auto;font-size:var(--fs-xs);letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
-.filter{
-  appearance:none;border-radius:0;cursor:pointer;background:transparent;color:var(--fg);
-  border:1px solid var(--line-strong);padding:6px 12px;font:inherit;font-size:var(--fs-xs);
-  letter-spacing:.08em;text-transform:uppercase;
-}
-.filter:hover{border-color:var(--fg)}
-.filter[aria-pressed="true"]{background:var(--paper);color:var(--ink);border-color:var(--paper);font-weight:700}
-@media(min-width:760px){
-  .filters{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:0;padding:0}
-  .filter{border:0;padding:16px;text-align:left}
-  .filter:hover{background:var(--panel)}
-  .filter[aria-pressed="true"]:hover{background:var(--paper)}
-  .filters .count{grid-column:6/8;margin:0;padding:16px;align-self:center}
-}
-.book h3{font-size:var(--fs-md);font-weight:800;line-height:1.25;letter-spacing:-.02em}
-.by{font-size:var(--fs-sm);color:var(--dim);margin-top:2px}
-.note{font-size:var(--fs-sm)}
-
-/* resources */
-.res{display:grid;grid-template-columns:minmax(0,1fr);border-top:1px solid var(--line);color:var(--fg);text-decoration:none}
-.res>*{padding:4px 16px}
-.res>:first-child{padding-top:14px}
-.res>:last-child{padding-bottom:14px}
-.res .nm{font-weight:700}
-.res .nt{color:var(--dim)}
-.res .dm{color:var(--accent-text);font-size:var(--fs-sm)}
-.res:hover,.res:focus-visible{background:var(--accent);color:#fff}
-.res:hover .nt,.res:hover .dm,.res:focus-visible .nt,.res:focus-visible .dm{color:#fff}
-@media(min-width:760px){
-  .res{grid-template-columns:2fr 3fr 2fr;align-items:baseline}
-  .res>*{padding:14px 16px}
-}
-.kit{display:flex;flex-wrap:wrap;gap:8px;padding:16px;border-top:1px solid var(--line)}
-.kit .chip{color:var(--fg);padding:4px 10px;font-size:var(--fs-sm)}
+.trow:not(.thead):hover{background:var(--accent-soft)}
 
 footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 16px;padding:12px 16px;border-top:2px solid var(--fg);background:var(--panel);font-size:var(--fs-xs);letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
 @media(min-width:760px){
@@ -252,150 +165,66 @@ footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 16px;pa
 <div class="frame">
 
   <div class="ruler" aria-hidden="true">
-    <span><span class="cl">COL </span>01</span>
-    <span><span class="cl">COL </span>02</span>
-    <span><span class="cl">COL </span>03</span>
-    <span><span class="cl">COL </span>04</span>
-    <span><span class="cl">COL </span>05</span>
-    <span><span class="cl">COL </span>06</span>
-    <span><span class="cl">COL </span>07</span>
+    <span>01</span><span>02</span><span>03</span><span>04</span><span>05</span><span>06</span><span>07</span>
   </div>
 
   <div class="strip">
-    <div>Design course</div>
-    <div>Syllabus v1.0</div>
-    <div>7 col grid</div>
+    <div>DES 604</div>
+    <div>IITGN MDes 2026</div>
+    <div>Course brief</div>
     <div>Updated 08.11.2026</div>
   </div>
 
   <header>
     <div class="hero">
       <h1><span>Technology</span><span>&amp; Design</span><span class="inv">Situations</span></h1>
-      <p class="lede">A 14-week studio course. You work inside real situations, not briefs. Each one already has people, limits and technology in the room.<span class="cursor" aria-hidden="true"></span></p>
+      <p class="lede"><b>Instructor:</b> Malay Dhamelia<br><b>TAs:</b> Vyshnav PK<br><b>Class timings:</b><br>First half 9:30 AM – 1:00 PM<br>Second half 2:15 PM – 4:30 PM<span class="cursor" aria-hidden="true"></span></p>
     </div>
     <div class="meta">
-      <div><span class="k">Format</span><span class="v">Seminar + studio</span></div>
-      <div><span class="k">Length</span><span class="v">14 weeks</span></div>
-      <div><span class="k">Output</span><span class="v">Portfolio of 4 situations</span></div>
-      <div><span class="k">Assessment</span><span class="v">Continuous, no final exam</span></div>
+      <div><span class="k">Attendance policy</span><span>To be discussed and finalised in the studio with all your inputs.</span></div>
+      <div><span class="k">Communication channel</span><span>Email and the IITGN MDes 2026 Google Chat (expect replies within 4 hours).</span></div>
+      <div><span class="k">Disclaimer</span><span>Policy, course plan subject to change of the instructor’s discretion. All updates will be announced on the <a href="https://chat.google.com/room/AAQAo4nD2Fs?cls=7" target="_blank" rel="noopener noreferrer">IITGN MDes 2026 Google Chat</a>.</span></div>
     </div>
   </header>
 
   <nav class="tabs" role="tablist" aria-label="Course sections">
-    <button class="tab" role="tab" id="tab-course-plan" data-tab="course-plan" aria-controls="panel-course-plan" aria-selected="true" tabindex="0"><span class="mark" aria-hidden="true">[■]</span><span>Course Plan</span></button>
-    <button class="tab" role="tab" id="tab-why-situations" data-tab="why-situations" aria-controls="panel-why-situations" aria-selected="false" tabindex="-1"><span class="mark" aria-hidden="true">[ ]</span><span>Why technology and design situations</span></button>
+    <button class="tab" role="tab" id="tab-about-studio" data-tab="about-studio" aria-controls="panel-about-studio" aria-selected="true" tabindex="0"><span class="mark" aria-hidden="true">[■]</span><span>About the studio</span></button>
+    <button class="tab" role="tab" id="tab-course-plan" data-tab="course-plan" aria-controls="panel-course-plan" aria-selected="false" tabindex="-1"><span class="mark" aria-hidden="true">[ ]</span><span>Course Plan</span></button>
     <button class="tab" role="tab" id="tab-bookshelf" data-tab="bookshelf" aria-controls="panel-bookshelf" aria-selected="false" tabindex="-1"><span class="mark" aria-hidden="true">[ ]</span><span>Bookshelf</span></button>
     <button class="tab" role="tab" id="tab-resources" data-tab="resources" aria-controls="panel-resources" aria-selected="false" tabindex="-1"><span class="mark" aria-hidden="true">[ ]</span><span>Learning resources</span></button>
   </nav>
 
   <main>
 
+    <!-- ABOUT THE STUDIO -->
+    <section id="panel-about-studio" role="tabpanel" aria-labelledby="tab-about-studio" tabindex="0">
+      <div class="phead"><h2>About the studio</h2></div>
+      <div class="about">
+        <p>From a very wide perspective, design is not a single discipline or a profession, it is a family of professions. It includes, or historically included, urban design (the design of urban places), regional planning (concerned with the structure and ecology of whole regions), and the type of town planning that produces plans for the physical structures of cities. Architecture is often believed to be the mother of these professions, although, now, one might argue that it less of a prototypical design profession now. But, like all families, this family also has some issues: Wittgenstenian issues. Design has stopped resembling like architecture and has taken its shapes and forms. These forms might be similar to management, or software development, or fabrication engineering, consulting, and so forth. It is also blurred with engineering, technology design, creative technologies, engineering design, design engineering, and management. And this blurring, merging is good; it indicates evolution of design as a profession. With these changes, a designer needs to speak like a designer but also speak to machines, and technologies. A Designer (a capital D!) needs to have technological imagination.</p>
+        <p>This course is about seeing designer in relation to technology. It aims to expand on the technological imaginations through observing, thinking, and making -- all three in a particular rhythm. It aims to create tangible, embedded, embodied, interactive, and reactive products with consciousness of technology, of designer's roles in shaping technology, and its effects and affect on the user.</p>
+      </div>
+    </section>
+
     <!-- COURSE PLAN -->
-    <section id="panel-course-plan" role="tabpanel" aria-labelledby="tab-course-plan" tabindex="0">
-      <div class="phead">
-        <h2>Course plan</h2>
-        <p class="lead">Fourteen weeks, four situations. Each situation runs three to four weeks and ends in a review. Seminar covers method and reading. Studio is where you work inside the situation.</p>
-      </div>
-
-      <div class="cells s223">
-        <div><span class="k">Seminar</span><p class="big">90 min / week</p><p class="dim">Method, reading and critique.</p></div>
-        <div><span class="k">Studio</span><p class="big">3 hr / week</p><p class="dim">Building, testing and reviews with the whole group.</p></div>
-        <div><span class="k">Fieldwork</span><p class="big">2–3 hr / week</p><p class="dim">Time on your own, inside your situation.</p></div>
-      </div>
-
-      <div class="bar"><span>Weekly schedule</span><span>4 situations / 14 weeks</span></div>
-      <div class="trow thead cols-weeks"><div>Week</div><div>Topic</div><div>In studio</div><div>Hand in</div></div>
-      <div id="weeks"></div>
-
-      <div class="bar"><span>Assessment</span><span>Total 100%</span></div>
-      <div id="assessment">
-        <div class="asm"><span class="nm">Situation log and field notes</span><span class="pct">20%</span><span class="ds">Weekly entries from inside your situation.</span><div class="track"><div class="fill" style="--w:20%"></div></div></div>
-        <div class="asm"><span class="nm">Midterm studio review, Week 6</span><span class="pct">20%</span><span class="ds">Problem frame and first prototype, defended in front of two reviewers.</span><div class="track"><div class="fill" style="--w:20%"></div></div></div>
-        <div class="asm"><span class="nm">Evaluation and test reports</span><span class="pct">20%</span><span class="ds">Heuristic evaluation in Week 7 and user test log in Week 10.</span><div class="track"><div class="fill" style="--w:20%"></div></div></div>
-        <div class="asm"><span class="nm">Final portfolio and exhibition</span><span class="pct">30%</span><span class="ds">All four situations documented, one shown live in Week 14.</span><div class="track"><div class="fill" style="--w:30%"></div></div></div>
-        <div class="asm"><span class="nm">Participation and peer review</span><span class="pct">10%</span><span class="ds">The critique you give counts as much as the work you show.</span><div class="track"><div class="fill" style="--w:10%"></div></div></div>
-        <div class="asm total"><span class="nm">Total</span><span class="pct">100%</span></div>
-      </div>
+    <section id="panel-course-plan" role="tabpanel" aria-labelledby="tab-course-plan" tabindex="0" hidden>
+      <div class="phead"><h2>Course plan</h2></div>
+      <div class="trow thead cols-plan"><div>Date (Week)</div><div>First half</div><div>Second half</div><div>Assignment / Readings</div></div>
+      <div id="plan"></div>
+      <div class="bar"><span>Assignment overview</span></div>
     </section>
 
-    <!-- WHY -->
-    <section id="panel-why-situations" role="tabpanel" aria-labelledby="tab-why-situations" tabindex="0" hidden>
-      <div class="phead">
-        <h2>Why technology and design situations</h2>
-        <p class="lead">Problems do not arrive as "a UX task" or "an electronics task". They arrive as a bus stop with no timetable, or a shop ledger nobody trusts. This course starts there, and picks up methods and tools as the situation asks for them.</p>
-      </div>
+    <!-- BOOKSHELF (empty) -->
+    <section id="panel-bookshelf" class="blank" role="tabpanel" aria-labelledby="tab-bookshelf" tabindex="0" hidden></section>
 
-      <div class="bar"><span>Four reasons</span><span>Why not projects or tools</span></div>
-      <div class="cells s34">
-        <div><span class="chip">Tangled</span><h3>Real problems cross disciplines</h3><p class="dim">A broken queue involves layout, signage, payment, staffing and mood at once. A situation keeps all of them in view. A single-discipline brief hides most of them.</p></div>
-        <div><span class="chip">Chosen</span><h3>Technology is a decision</h3><p class="dim">Every system has someone who decided what it measures, hides or automates. Inside a situation you can see who decided, and who lives with the result.</p></div>
-        <div><span class="chip">Bounded</span><h3>Limits teach faster than briefs</h3><p class="dim">Budget, power cuts, language and time are part of the situation. You learn to design inside them instead of for an ideal user in an ideal lab.</p></div>
-        <div><span class="chip">Durable</span><h3>Tools expire, judgement carries</h3><p class="dim">Software and frameworks change every few years. Observing, framing, testing and arguing for a choice moves with you to the next tool.</p></div>
-      </div>
-
-      <div class="bar"><span>Anatomy of a situation</span><span>Worked example: the hostel mess queue</span></div>
-      <div class="trow thead cols-anat"><div>Field</div><div>It asks</div><div>Illustrative example</div></div>
-      <div class="trow cols-anat"><div class="tag">Who</div><div data-label="It asks">Who is in it, and who is missing?</div><div data-label="Example">Students after a late class, mess workers, the supervisor. A student with a food allergy is easy to overlook.</div></div>
-      <div class="trow cols-anat"><div class="tag">Where</div><div data-label="It asks">What is the physical and social setting?</div><div data-label="Example">A hall with two counters, one door and a 20-minute window before the rush.</div></div>
-      <div class="trow cols-anat"><div class="tag">What breaks</div><div data-label="It asks">What goes wrong, observed rather than assumed?</div><div data-label="Example">The line folds back on itself near the tray stack. Some people leave without eating.</div></div>
-      <div class="trow cols-anat"><div class="tag">At stake</div><div data-label="It asks">What does failure cost, and to whom?</div><div data-label="Example">Missed meals, wasted food, staff blamed for a layout they did not choose.</div></div>
-      <div class="trow cols-anat"><div class="tag">On hand</div><div data-label="It asks">Which technology, materials and skills are already there?</div><div data-label="Example">A tablet at the counter, a shared spreadsheet, a WhatsApp group, two stopwatches.</div></div>
-
-      <div class="bar"><span>Two ways to start</span><span>Tool-first vs situation-first</span></div>
-      <div class="trow thead cols-cmp"><div>Aspect</div><div>Tool-first</div><div>Situation-first</div></div>
-      <div class="trow cols-cmp"><div class="tag">Starts with</div><div data-label="Tool-first">A tool or a brief</div><div data-label="Situation-first" class="strong">A place and the people in it</div></div>
-      <div class="trow cols-cmp"><div class="tag">First question</div><div data-label="Tool-first">What can we build with this?</div><div data-label="Situation-first" class="strong">What is actually going on here?</div></div>
-      <div class="trow cols-cmp"><div class="tag">Success</div><div data-label="Tool-first">A working demo</div><div data-label="Situation-first" class="strong">Something people choose to keep using</div></div>
-      <div class="trow cols-cmp"><div class="tag">Typical failure</div><div data-label="Tool-first">A good answer to the wrong problem</div><div data-label="Situation-first" class="strong">Observing for so long that nothing gets built</div></div>
-
-      <div class="bar"><span>Situations you may meet</span><span>Swap in your own with approval</span></div>
-      <div class="cells s6">
-        <div><span class="chip">Transit</span><h3>A bus stop with no timetable</h3><p class="dim">Who waits, for how long, and what do they guess?</p></div>
-        <div><span class="chip">Trade</span><h3>A tailor's ledger kept on paper</h3><p class="dim">What would digitising it change for the tailor and the customer?</p></div>
-        <div><span class="chip">Campus</span><h3>A hostel mess queue at 8 pm</h3><p class="dim">Where does time go between the door and the table?</p></div>
-        <div><span class="chip">Wayfinding</span><h3>A campus map students ignore</h3><p class="dim">What do people use instead, and why is it better?</p></div>
-        <div><span class="chip">Payments</span><h3>A kirana store taking UPI and cash</h3><p class="dim">Where do the two flows collide at the counter?</p></div>
-        <div><span class="chip">Shared space</span><h3>A lab booking sheet with five owners</h3><p class="dim">Whose rules are written down, and whose are only understood?</p></div>
-      </div>
-    </section>
-
-    <!-- BOOKSHELF -->
-    <section id="panel-bookshelf" role="tabpanel" aria-labelledby="tab-bookshelf" tabindex="0" hidden>
-      <div class="phead">
-        <h2>Bookshelf</h2>
-        <p class="lead">Sixteen books. Read at least one per situation, from any shelf. Each carries the week it pairs best with.</p>
-      </div>
-      <div class="filters" id="filters" role="group" aria-label="Filter books by shelf">
-        <button class="filter" type="button" data-f="all" aria-pressed="true">All</button>
-        <button class="filter" type="button" data-f="Design" aria-pressed="false">Design</button>
-        <button class="filter" type="button" data-f="Technology" aria-pressed="false">Technology</button>
-        <button class="filter" type="button" data-f="Systems" aria-pressed="false">Systems</button>
-        <button class="filter" type="button" data-f="Critique" aria-pressed="false">Critique</button>
-        <span class="count" id="count" aria-live="polite">Showing 16 / 16</span>
-      </div>
-      <div class="trow thead cols-book"><div>Week</div><div>Book</div><div>Why read it</div><div>Shelf</div></div>
-      <div id="shelf"></div>
-    </section>
-
-    <!-- RESOURCES -->
-    <section id="panel-resources" role="tabpanel" aria-labelledby="tab-resources" tabindex="0" hidden>
-      <div class="phead">
-        <h2>Learning resources</h2>
-        <p class="lead">Free, open and maintained by the people who write them. Links open in a new tab.</p>
-      </div>
-      <div id="resources"></div>
-      <div class="bar"><span>Bring to studio</span><span>Every week</span></div>
-      <div class="kit">
-        <span class="chip">Paper notebook</span><span class="chip">Pen</span><span class="chip">Phone camera</span><span class="chip">Masking tape</span><span class="chip">Sticky notes</span>
-      </div>
-    </section>
+    <!-- RESOURCES (empty) -->
+    <section id="panel-resources" class="blank" role="tabpanel" aria-labelledby="tab-resources" tabindex="0" hidden></section>
 
   </main>
 
   <footer>
-    <span>End of file</span>
-    <span>Arrow keys switch tabs</span>
-    <span>08.11.2026</span>
+    <span></span>
+    <span></span>
+    <span>Last updated: 08.11.2026</span>
   </footer>
 
 </div>
@@ -403,134 +232,33 @@ footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 16px;pa
 
 <script>
 (function(){
-  /* ---------- data ---------- */
-  var MODULES=[
-    {n:1,name:"A queue",mode:"Observe",weeks:"1–3",ends:"Review: situation log",rows:[
-      [1,"What is a situation? Design as changing what exists","Walk the campus. List five things that do not work and who they do not work for.","Situation log, 5 entries"],
-      [2,"Observation and field notes","Watch one queue for 45 minutes. Sketch the flow and time each step.","Field notes and flow map"],
-      [3,"Interviews and found artifacts","Run three 10-minute interviews. Collect tokens, receipts and signs.","Synthesis wall"]
-    ]},
-    {n:2,name:"A shop",mode:"Frame",weeks:"4–6",ends:"Midterm review, Week 6",rows:[
-      [4,"Framing: problem statements and stakeholders","Write the same problem three ways. Choose one and defend it.","One-page problem frame"],
-      [5,"Constraints: money, power, language, literacy","Make constraint cards. Mark what must not change.","Constraint map"],
-      [6,"Technology as material: paper, forms, sensors, spreadsheets","Build the cheapest thing that tests your frame.","Prototype v0 and midterm review"]
-    ]},
-    {n:3,name:"A commute",mode:"Build",weeks:"7–10",ends:"Review: test log",rows:[
-      [7,"Interaction basics: affordance, feedback, error","Run a heuristic evaluation of a real ticketing or payment screen.","Evaluation report"],
-      [8,"Information design: layout, type, wayfinding","Redraw a sign, schedule or screen from your situation.","Redesign, before and after"],
-      [9,"Choosing technology: build, buy or borrow; data and privacy","Write a one-page decision memo for your prototype.","Technology decision memo"],
-      [10,"Testing with people","Test with five people in the real setting. Change one thing, test again.","Test log and prototype v1"]
-    ]},
-    {n:4,name:"A campus service",mode:"Judge",weeks:"11–14",ends:"Final exhibition, Week 14",rows:[
-      [11,"Systems: loops, delays and side effects","Draw the system around your design. Find one feedback loop.","System map"],
-      [12,"Access and inclusion","Test with one limit: one hand, low light, or no English.","Access audit"],
-      [13,"Ethics, power and who decides","Debate: who gets a say in how this is built?","Position note, 500 words"],
-      [14,"Final studio and exhibition","Present to people who live in the situation.","Portfolio and 5-minute talk"]
-    ]}
+  /* ---------- course plan, as in the Word file ---------- */
+  var PLAN=[
+    ["Monday, November 9, 2026",["Introduction to the course, its dispositions, and motivations","A designer and their world-making in a technology"],["Affect","Recording Affect"],["Assignment 1","Reading"]],
+    ["Tuesday, November 10, 2026",["Metaphors of Technology:","Mediator"],["[3:30 PM – 5:00 PM] Presentation and Discussion of Assignment 1.","Assignment 2 Announcement","Assignment 2: Formulating Brief"],["Assignment 2","Reading"]],
+    ["Wednesday, November 11, 2026",["Metaphors of Technology:","Organism"],["Assignment 2: Ideation"],["Reading"]],
+    ["Thursday, November 12, 2026",["Metaphors of Technology:","Parasite/Symbiont"],["Assignment 2: Presentation","Assignment 3 Announcement"],["Reading"]],
+    ["Friday, November 13, 2026",["Metaphors of Technology:","Language"],["Visualising and Brainstorming Interactions","Metaphors in Technology"],["Readings"]],
+    ["Saturday, November 14, 2026",["Field Visit"],["Field Visit"],[]],
+    ["Sunday, November 15, 2026",["Field Visit"],["Field Visit"],[]],
+    ["Monday, November 16, 2026",["Situated Actions, Scripts, Plans, and Post-Scripts"],["Presentation: Concept formation for Assignment 3"],["Readings"]],
+    ["Tuesday, November 17, 2026",["Rituals, Techniques, Technics"],["Presentation: Concept formation iteration 2"],["Readings"]],
+    ["Wednesday, November 18, 2026",["Memory, Time, Waiting, and Nostalgia"],["Presentation: Concept formation iteration 3"],["Readings"]],
+    ["Thursday, November 19, 2026",["Office hours"],["Office hours"],[]],
+    ["Friday, November 20, 2026",["Office hours"],["Office hours"],[]],
+    ["Saturday, November 21, 2026",[],[],[]],
+    ["Sunday, November 22, 2026",[],[],[]],
+    ["Monday, November 23, 2026",["Office hours"],["Final Presentation"],[]]
   ];
-
-  var BOOKS=[
-    {t:"The Sciences of the Artificial",a:"Herbert A. Simon",y:"1969",tag:"Systems",wk:4,n:"Defines design as changing existing situations into preferred ones. The course's starting line."},
-    {t:"Design for the Real World",a:"Victor Papanek",y:"1971",tag:"Critique",wk:1,n:"A blunt argument that designers answer for what their work does in the world."},
-    {t:"Seeing Like a State",a:"James C. Scott",y:"1998",tag:"Systems",wk:2,n:"Why plans that ignore local knowledge fail, with cases from forestry to cities."},
-    {t:"Notes on the Synthesis of Form",a:"Christopher Alexander",y:"1964",tag:"Design",wk:5,n:"Design as fitting a form to its context. The case for starting from constraints."},
-    {t:"Designing Interactions",a:"Bill Moggridge",y:"2007",tag:"Design",wk:6,n:"Interviews with the people who shaped early interaction design."},
-    {t:"The Design of Everyday Things",a:"Don Norman",y:"1988, rev. 2013",tag:"Design",wk:7,n:"Affordances, signifiers and the cost of poor feedback, using doors, stoves and software."},
-    {t:"A Pattern Language",a:"Christopher Alexander et al.",y:"1977",tag:"Design",wk:8,n:"253 patterns for towns, buildings and rooms, written so non-architects can use them."},
-    {t:"Questioning Technology",a:"Andrew Feenberg",y:"1999",tag:"Technology",wk:9,n:"Technology as a site of choice, shaped by the people and interests around it."},
-    {t:"Weapons of Math Destruction",a:"Cathy O'Neil",y:"2016",tag:"Technology",wk:9,n:"How opaque scoring systems quietly decide jobs, loans and sentences."},
-    {t:"The Reflective Practitioner",a:"Donald A. Schön",y:"1983",tag:"Design",wk:10,n:"How practitioners think while working, and why they reframe the problem as they go."},
-    {t:"Thinking in Systems",a:"Donella H. Meadows",y:"2008",tag:"Systems",wk:11,n:"Stocks, flows and feedback loops, explained without equations."},
-    {t:"How Buildings Learn",a:"Stewart Brand",y:"1994",tag:"Systems",wk:11,n:"What happens to buildings after the architect leaves."},
-    {t:"Design Meets Disability",a:"Graham Pullin",y:"2009",tag:"Critique",wk:12,n:"Treats disability as a source of design ideas, not a problem to fix."},
-    {t:"Technopoly",a:"Neil Postman",y:"1992",tag:"Technology",wk:13,n:"A sceptical history of what happens when a culture hands authority to technology."},
-    {t:"Design Justice",a:"Sasha Costanza-Chock",y:"2020",tag:"Critique",wk:13,n:"Asks who gets to design, who benefits, and who carries the harm."},
-    {t:"Designing for the Pluriverse",a:"Arturo Escobar",y:"2018",tag:"Critique",wk:14,n:"Design for many ways of living instead of one universal model."}
-  ];
-
-  var RES=[
-    {g:"Methods",items:[
-      ["IDEO Design Kit","https://www.designkit.org/","designkit.org","Human-centred design methods with worked cases from around the world."],
-      ["Stanford d.school","https://dschool.stanford.edu/","dschool.stanford.edu","Free guides and activity cards for running design sessions."],
-      ["Design Justice Network","https://designjustice.org/","designjustice.org","Principles for design that shares benefit and power with the people it affects."],
-      ["Interaction Design Foundation","https://www.interaction-design.org/","interaction-design.org","Articles and courses on interaction and service design."]
-    ]},
-    {g:"Standards and principles",items:[
-      ["Ten usability heuristics","https://www.nngroup.com/articles/ten-usability-heuristics/","nngroup.com/articles/ten-usability-heuristics","Jakob Nielsen's checklist, used for the Week 7 evaluation."],
-      ["Ten principles of good design","https://www.vitsoe.com/gb/about/good-design","vitsoe.com/gb/about/good-design","Dieter Rams' ten principles, illustrated."],
-      ["WCAG overview","https://www.w3.org/WAI/standards-guidelines/wcag/","w3.org/WAI/standards-guidelines/wcag","The accessibility standard for web content, with plain-language explainers."],
-      ["Microsoft Inclusive Design","https://inclusive.microsoft.design/","inclusive.microsoft.design","Toolkit built around permanent, temporary and situational limits."],
-      ["Material Design 3","https://m3.material.io/","m3.material.io","Google's component and layout guidelines."],
-      ["Apple Human Interface Guidelines","https://developer.apple.com/design/human-interface-guidelines","developer.apple.com/design/human-interface-guidelines","Platform conventions for Apple devices."]
-    ]},
-    {g:"Tools",items:[
-      ["Figma","https://www.figma.com/","figma.com","Interface design and prototyping in the browser."],
-      ["Penpot","https://penpot.app/","penpot.app","Open-source alternative for interface design."],
-      ["Excalidraw","https://excalidraw.com/","excalidraw.com","Fast shared sketching for system maps and flows."],
-      ["Arduino Docs","https://docs.arduino.cc/","docs.arduino.cc","Reference and tutorials for sensor prototypes."],
-      ["Google Fonts","https://fonts.google.com/","fonts.google.com","Free typefaces, including the one this page is set in."]
-    ]},
-    {g:"Reading online",items:[
-      ["A List Apart","https://alistapart.com/","alistapart.com","Essays on web craft and design practice."],
-      ["Smashing Magazine","https://www.smashingmagazine.com/","smashingmagazine.com","Practical articles on interface design and front-end work."],
-      ["Design Observer","https://designobserver.com/","designobserver.com","Essays and criticism on design and culture."],
-      ["Core77","https://www.core77.com/","core77.com","Industrial design news and discussion."]
-    ]}
-  ];
-
-  /* ---------- render ---------- */
-  function pad(n){return n<10?"0"+n:""+n}
-
-  var weeks="";
-  MODULES.forEach(function(m){
-    weeks+='<div class="mod"><div><span class="k">Situation '+m.n+' / '+m.mode+'</span><p class="big">'+m.name+'</p></div>'
-      +'<div class="r"><div>Weeks '+m.weeks+'</div><div class="dim">'+m.ends+'</div></div></div>';
-    m.rows.forEach(function(r){
-      weeks+='<div class="trow cols-weeks"><div class="wkc"><span class="wk-l">WK</span><span class="wk-n">'+pad(r[0])+'</span></div>'
-        +'<div data-label="Topic"><strong>'+r[1]+'</strong></div>'
-        +'<div data-label="In studio">'+r[2]+'</div>'
-        +'<div data-label="Hand in" class="strong">'+r[3]+'</div></div>';
-    });
+  var html="";
+  PLAN.forEach(function(r){
+    html+='<div class="trow cols-plan">'
+      +'<div class="date">'+r[0]+'</div>'
+      +'<div data-label="First half">'+r[1].join("<br>")+'</div>'
+      +'<div data-label="Second half">'+r[2].join("<br>")+'</div>'
+      +'<div data-label="Assignment / Readings">'+r[3].join("<br>")+'</div></div>';
   });
-  document.getElementById("weeks").innerHTML=weeks;
-
-  var shelf="";
-  BOOKS.forEach(function(b){
-    shelf+='<article class="trow cols-book book" data-tag="'+b.tag+'">'
-      +'<div class="wkc"><span class="wk-l">WK</span><span class="wk-n">'+pad(b.wk)+'</span></div>'
-      +'<div data-label="Book"><h3>'+b.t+'</h3><p class="by">'+b.a+' · '+b.y+'</p></div>'
-      +'<div data-label="Why read it" class="note">'+b.n+'</div>'
-      +'<div data-label="Shelf"><span class="chip">'+b.tag+'</span></div></article>';
-  });
-  document.getElementById("shelf").innerHTML=shelf;
-
-  var res="";
-  RES.forEach(function(g){
-    res+='<div class="bar"><span>'+g.g+'</span><span>'+g.items.length+' links</span></div>';
-    g.items.forEach(function(i){
-      res+='<a class="res" href="'+i[1]+'" target="_blank" rel="noopener noreferrer"><span class="nm">'+i[0]+'</span><span class="nt">'+i[3]+'</span><span class="dm">'+i[2]+' ↗</span></a>';
-    });
-  });
-  document.getElementById("resources").innerHTML=res;
-
-  /* ---------- bookshelf filter ---------- */
-  var filters=document.getElementById("filters");
-  var count=document.getElementById("count");
-  filters.addEventListener("click",function(e){
-    var btn=e.target.closest("button[data-f]");
-    if(!btn)return;
-    var f=btn.getAttribute("data-f");
-    var buttons=filters.querySelectorAll("button[data-f]");
-    for(var i=0;i<buttons.length;i++){buttons[i].setAttribute("aria-pressed",buttons[i]===btn?"true":"false")}
-    var cards=document.querySelectorAll("#shelf .book");
-    var shown=0;
-    for(var j=0;j<cards.length;j++){
-      var show=f==="all"||cards[j].getAttribute("data-tag")===f;
-      cards[j].hidden=!show;
-      if(show)shown++;
-    }
-    count.textContent="Showing "+shown+" / "+cards.length;
-  });
+  document.getElementById("plan").innerHTML=html;
 
   /* ---------- tabs ---------- */
   var tabs=Array.prototype.slice.call(document.querySelectorAll('[role="tab"]'));
