@@ -1,0 +1,298 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Design Situations</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap">
+<style>
+:root{
+  /* Layout: one hard-bordered frame on a visible 7-column grid, zero gutter. Column lines run the full height of the frame; every row (hero, tabs, tables, footer) is split on those same 7 columns. Light theme only: yellowish gray ground, black type, one blue accent. */
+  --bg:#e4e1d0;
+  --panel:#d9d6c3;
+  --line:#b8b59f;
+  --line-strong:#8c8973;
+  --col:rgba(35,71,245,.2);
+  --col-solid:#a3abd6;
+  --fg:#111111;
+  --dim:#4f4d3b;
+  --accent:#2347f5;
+  --accent-soft:#c5cffa;
+  --inv-bg:#111111;
+  --inv-fg:#e4e1d0;
+  --mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,"Liberation Mono",monospace;
+  --fs-xs:11px;
+  --fs-sm:12.5px;
+  --fs-base:14px;
+  --fs-md:16px;
+  --fs-lg:clamp(1.25rem,3vw,1.75rem);
+  --fs-xl:clamp(1.6rem,5vw,3rem);
+  --fs-hero:clamp(2rem,10.5vw,6.5rem);
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--fg);
+  font:400 var(--fs-base)/1.6 var(--mono);
+  overflow-wrap:anywhere;
+}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:40;background:var(--bg)}
+::selection{background:var(--accent);color:#fff}
+:focus-visible{outline:3px solid var(--fg);outline-offset:-3px}
+h1,h2,p{margin:0}
+h1,h2{text-wrap:balance}
+a{color:var(--accent);text-decoration:underline;text-underline-offset:3px}
+a:hover{background:var(--accent);color:#fff;text-decoration:none}
+
+.page{
+  padding-block:24px 40px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+}
+.frame{position:relative;max-width:1200px;margin-inline:auto;border:2px solid var(--fg);background:var(--bg)}
+
+/* the 7 column guides: a line on the right edge of each column, full height */
+.frame::before{
+  content:"";position:absolute;inset:0;z-index:20;pointer-events:none;
+  background:repeating-linear-gradient(90deg,transparent 0,transparent calc(100%/7 - 1px),var(--col) calc(100%/7 - 1px),var(--col) calc(100%/7));
+}
+
+/* column ruler */
+.ruler{
+  position:sticky;top:env(safe-area-inset-top,0px);z-index:25;
+  display:grid;grid-template-columns:repeat(7,minmax(0,1fr));
+  background:var(--panel);border-bottom:2px solid var(--fg);
+}
+.ruler>span{padding:6px 8px;font-size:var(--fs-xs);font-weight:700;letter-spacing:.1em;color:var(--dim);border-right:1px solid var(--col-solid);white-space:nowrap;overflow:hidden}
+.ruler>span:last-child{border-right:0}
+@media(max-width:759px){.ruler>span{padding-inline:4px;text-align:center}}
+
+/* top strip */
+.strip{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--line);border-bottom:2px solid var(--fg)}
+.strip>div{background:var(--panel);padding:8px 16px;font-size:var(--fs-xs);letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
+.strip>div:first-child{color:var(--fg);font-weight:700}
+@media(min-width:760px){.strip{grid-template-columns:2fr 2fr 1fr 2fr;gap:0;background:var(--panel)}}
+
+/* hero */
+.hero{display:grid;grid-template-columns:minmax(0,1fr)}
+.hero>*{padding:clamp(20px,5vw,48px) 16px}
+h1{
+  font-size:var(--fs-hero);font-weight:800;line-height:.95;letter-spacing:-.045em;text-transform:uppercase;
+  display:flex;flex-direction:column;align-items:flex-start;
+}
+h1 .inv{background:var(--accent);color:#fff;padding:0 .1em;margin-left:-.05em}
+.hero>.lede{font-size:var(--fs-md);padding-top:0}
+.cursor{display:inline-block;width:.6em;height:1.05em;background:var(--accent);vertical-align:-.2em;margin-left:4px;animation:blink 1.1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+@media(prefers-reduced-motion:reduce){.cursor{animation:none}}
+@media(min-width:900px){
+  .hero{grid-template-columns:repeat(7,minmax(0,1fr))}
+  .hero>h1{grid-column:1/5;font-size:clamp(3rem,7vw,6rem)}
+  .hero>.lede{grid-column:5/8;align-self:end}
+}
+
+.meta{display:grid;grid-template-columns:minmax(0,1fr);gap:1px;background:var(--line);border-top:2px solid var(--fg)}
+.meta>div{background:var(--bg);padding:12px 16px;display:grid;gap:2px;align-content:start}
+.k{font-size:var(--fs-xs);letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+@media(min-width:900px){.meta{grid-template-columns:2fr 2fr 3fr;gap:0;background:none}}
+
+/* tabs */
+.tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--line);border-top:2px solid var(--fg);border-bottom:2px solid var(--fg)}
+.tab{
+  appearance:none;border:0;border-radius:0;margin:0;cursor:pointer;
+  background:var(--panel);color:var(--fg);font:inherit;
+  font-size:var(--fs-sm);font-weight:700;letter-spacing:.06em;text-transform:uppercase;text-align:left;
+  padding:14px 16px;min-height:76px;display:flex;flex-direction:column;justify-content:space-between;gap:10px;
+}
+.tab .mark{font-weight:500;color:var(--dim);letter-spacing:0}
+.tab:hover{background:var(--accent-soft);color:var(--fg)}
+.tab:hover .mark{color:var(--fg)}
+.tab[aria-selected="true"]{background:var(--accent);color:#fff}
+.tab[aria-selected="true"] .mark{color:#fff}
+@media(min-width:900px){.tabs{grid-template-columns:2fr 2fr 1fr 2fr;gap:0;background:none}}
+
+/* panels */
+.blank{min-height:320px}
+.phead{display:grid;grid-template-columns:minmax(0,1fr)}
+.phead>h2{padding:24px 16px}
+@media(min-width:760px){
+  .phead{grid-template-columns:repeat(7,minmax(0,1fr))}
+  .phead>h2{grid-column:1/8;padding-block:clamp(24px,4vw,40px)}
+}
+h2{font-size:var(--fs-xl);font-weight:800;line-height:1;letter-spacing:-.04em;text-transform:uppercase}
+.bar{
+  display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 16px;
+  padding:8px 16px;background:var(--inv-bg);color:var(--inv-fg);
+  font-size:var(--fs-xs);font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  border-top:2px solid var(--fg);
+}
+
+/* about the studio: two paragraphs on the 7 columns */
+.about{display:grid;grid-template-columns:minmax(0,1fr);border-top:1px solid var(--line)}
+.about>p{padding:24px 16px;font-size:var(--fs-md);line-height:1.7;text-wrap:pretty}
+.about>p+p{padding-top:0}
+@media(min-width:760px){
+  .about{grid-template-columns:repeat(7,minmax(0,1fr))}
+  .about>p:first-child{grid-column:1/5;padding-block:32px}
+  .about>p:last-child{grid-column:5/8;padding-block:32px}
+}
+
+/* table rows: column templates add up to 7fr */
+.trow{display:grid;grid-template-columns:minmax(0,1fr);border-top:1px solid var(--line)}
+.trow>*{padding:14px 16px;min-width:0}
+.thead{font-size:var(--fs-xs);letter-spacing:.1em;text-transform:uppercase;color:var(--dim);background:var(--panel)}
+.thead>*{padding-block:8px}
+.date{font-weight:700;letter-spacing:.02em}
+.cols-plan{--cols:minmax(0,2fr) minmax(0,2fr) minmax(0,2fr) minmax(0,1fr)}
+@media(min-width:760px){.trow{grid-template-columns:var(--cols)}}
+@media(max-width:759px){
+  .trow>*{padding:6px 16px}
+  .trow>*:first-child{padding-top:12px}
+  .trow>*:last-child{padding-bottom:14px}
+  .thead{display:none}
+  .trow>div:empty{display:none}
+  .trow>[data-label]::before{content:attr(data-label);display:block;font-size:var(--fs-xs);letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+}
+.trow:not(.thead):hover{background:var(--accent-soft)}
+
+footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 16px;padding:12px 16px;border-top:2px solid var(--fg);background:var(--panel);font-size:var(--fs-xs);letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
+@media(min-width:760px){
+  footer{display:grid;grid-template-columns:2fr 3fr 2fr;gap:0;padding:0}
+  footer>*{padding:12px 16px}
+}
+</style>
+
+<div class="page">
+<div class="frame">
+
+  <div class="ruler" aria-hidden="true">
+    <span>01</span><span>02</span><span>03</span><span>04</span><span>05</span><span>06</span><span>07</span>
+  </div>
+
+  <div class="strip">
+    <div>DES 604</div>
+    <div>IITGN MDes 2026</div>
+    <div>Course brief</div>
+    <div>Updated 08.11.2026</div>
+  </div>
+
+  <header>
+    <div class="hero">
+      <h1><span>Technology</span><span>&amp; Design</span><span class="inv">Situations</span></h1>
+      <p class="lede"><b>Instructor:</b> Malay Dhamelia<br><b>TAs:</b> Vyshnav PK<br><b>Class timings:</b><br>First half 9:30 AM – 1:00 PM<br>Second half 2:15 PM – 4:30 PM<span class="cursor" aria-hidden="true"></span></p>
+    </div>
+    <div class="meta">
+      <div><span class="k">Attendance policy</span><span>To be discussed and finalised in the studio with all your inputs.</span></div>
+      <div><span class="k">Communication channel</span><span>Email and the IITGN MDes 2026 Google Chat (expect replies within 4 hours).</span></div>
+      <div><span class="k">Disclaimer</span><span>Policy, course plan subject to change of the instructor’s discretion. All updates will be announced on the <a href="https://chat.google.com/room/AAQAo4nD2Fs?cls=7" target="_blank" rel="noopener noreferrer">IITGN MDes 2026 Google Chat</a>.</span></div>
+    </div>
+  </header>
+
+  <nav class="tabs" role="tablist" aria-label="Course sections">
+    <button class="tab" role="tab" id="tab-about-studio" data-tab="about-studio" aria-controls="panel-about-studio" aria-selected="true" tabindex="0"><span class="mark" aria-hidden="true">[■]</span><span>About the studio</span></button>
+    <button class="tab" role="tab" id="tab-course-plan" data-tab="course-plan" aria-controls="panel-course-plan" aria-selected="false" tabindex="-1"><span class="mark" aria-hidden="true">[ ]</span><span>Course Plan</span></button>
+    <button class="tab" role="tab" id="tab-bookshelf" data-tab="bookshelf" aria-controls="panel-bookshelf" aria-selected="false" tabindex="-1"><span class="mark" aria-hidden="true">[ ]</span><span>Bookshelf</span></button>
+    <button class="tab" role="tab" id="tab-resources" data-tab="resources" aria-controls="panel-resources" aria-selected="false" tabindex="-1"><span class="mark" aria-hidden="true">[ ]</span><span>Learning resources</span></button>
+  </nav>
+
+  <main>
+
+    <!-- ABOUT THE STUDIO -->
+    <section id="panel-about-studio" role="tabpanel" aria-labelledby="tab-about-studio" tabindex="0">
+      <div class="phead"><h2>About the studio</h2></div>
+      <div class="about">
+        <p>From a very wide perspective, design is not a single discipline or a profession, it is a family of professions. It includes, or historically included, urban design (the design of urban places), regional planning (concerned with the structure and ecology of whole regions), and the type of town planning that produces plans for the physical structures of cities. Architecture is often believed to be the mother of these professions, although, now, one might argue that it less of a prototypical design profession now. But, like all families, this family also has some issues: Wittgenstenian issues. Design has stopped resembling like architecture and has taken its shapes and forms. These forms might be similar to management, or software development, or fabrication engineering, consulting, and so forth. It is also blurred with engineering, technology design, creative technologies, engineering design, design engineering, and management. And this blurring, merging is good; it indicates evolution of design as a profession. With these changes, a designer needs to speak like a designer but also speak to machines, and technologies. A Designer (a capital D!) needs to have technological imagination.</p>
+        <p>This course is about seeing designer in relation to technology. It aims to expand on the technological imaginations through observing, thinking, and making -- all three in a particular rhythm. It aims to create tangible, embedded, embodied, interactive, and reactive products with consciousness of technology, of designer's roles in shaping technology, and its effects and affect on the user.</p>
+      </div>
+    </section>
+
+    <!-- COURSE PLAN -->
+    <section id="panel-course-plan" role="tabpanel" aria-labelledby="tab-course-plan" tabindex="0" hidden>
+      <div class="phead"><h2>Course plan</h2></div>
+      <div class="trow thead cols-plan"><div>Date (Week)</div><div>First half</div><div>Second half</div><div>Assignment / Readings</div></div>
+      <div id="plan"></div>
+      <div class="bar"><span>Assignment overview</span></div>
+    </section>
+
+    <!-- BOOKSHELF (empty) -->
+    <section id="panel-bookshelf" class="blank" role="tabpanel" aria-labelledby="tab-bookshelf" tabindex="0" hidden></section>
+
+    <!-- RESOURCES (empty) -->
+    <section id="panel-resources" class="blank" role="tabpanel" aria-labelledby="tab-resources" tabindex="0" hidden></section>
+
+  </main>
+
+  <footer>
+    <span></span>
+    <span></span>
+    <span>Last updated: 08.11.2026</span>
+  </footer>
+
+</div>
+</div>
+
+<script>
+(function(){
+  /* ---------- course plan, as in the Word file ---------- */
+  var PLAN=[
+    ["Monday, November 9, 2026",["Introduction to the course, its dispositions, and motivations","A designer and their world-making in a technology"],["Affect","Recording Affect"],["Assignment 1","Reading"]],
+    ["Tuesday, November 10, 2026",["Metaphors of Technology:","Mediator"],["[3:30 PM – 5:00 PM] Presentation and Discussion of Assignment 1.","Assignment 2 Announcement","Assignment 2: Formulating Brief"],["Assignment 2","Reading"]],
+    ["Wednesday, November 11, 2026",["Metaphors of Technology:","Organism"],["Assignment 2: Ideation"],["Reading"]],
+    ["Thursday, November 12, 2026",["Metaphors of Technology:","Parasite/Symbiont"],["Assignment 2: Presentation","Assignment 3 Announcement"],["Reading"]],
+    ["Friday, November 13, 2026",["Metaphors of Technology:","Language"],["Visualising and Brainstorming Interactions","Metaphors in Technology"],["Readings"]],
+    ["Saturday, November 14, 2026",["Field Visit"],["Field Visit"],[]],
+    ["Sunday, November 15, 2026",["Field Visit"],["Field Visit"],[]],
+    ["Monday, November 16, 2026",["Situated Actions, Scripts, Plans, and Post-Scripts"],["Presentation: Concept formation for Assignment 3"],["Readings"]],
+    ["Tuesday, November 17, 2026",["Rituals, Techniques, Technics"],["Presentation: Concept formation iteration 2"],["Readings"]],
+    ["Wednesday, November 18, 2026",["Memory, Time, Waiting, and Nostalgia"],["Presentation: Concept formation iteration 3"],["Readings"]],
+    ["Thursday, November 19, 2026",["Office hours"],["Office hours"],[]],
+    ["Friday, November 20, 2026",["Office hours"],["Office hours"],[]],
+    ["Saturday, November 21, 2026",[],[],[]],
+    ["Sunday, November 22, 2026",[],[],[]],
+    ["Monday, November 23, 2026",["Office hours"],["Final Presentation"],[]]
+  ];
+  var html="";
+  PLAN.forEach(function(r){
+    html+='<div class="trow cols-plan">'
+      +'<div class="date">'+r[0]+'</div>'
+      +'<div data-label="First half">'+r[1].join("<br>")+'</div>'
+      +'<div data-label="Second half">'+r[2].join("<br>")+'</div>'
+      +'<div data-label="Assignment / Readings">'+r[3].join("<br>")+'</div></div>';
+  });
+  document.getElementById("plan").innerHTML=html;
+
+  /* ---------- tabs ---------- */
+  var tabs=Array.prototype.slice.call(document.querySelectorAll('[role="tab"]'));
+  function select(i){
+    tabs.forEach(function(t,k){
+      var on=k===i;
+      t.setAttribute("aria-selected",on?"true":"false");
+      t.tabIndex=on?0:-1;
+      t.querySelector(".mark").textContent=on?"[■]":"[ ]";
+      document.getElementById(t.getAttribute("aria-controls")).hidden=!on;
+    });
+  }
+  function fromHash(){
+    var h=location.hash.replace("#","");
+    for(var i=0;i<tabs.length;i++){if(tabs[i].getAttribute("data-tab")===h)return i}
+    return 0;
+  }
+  tabs.forEach(function(t,i){
+    t.addEventListener("click",function(){
+      select(i);
+      if(location.hash.replace("#","")!==t.getAttribute("data-tab")){location.hash=t.getAttribute("data-tab")}
+    });
+    t.addEventListener("keydown",function(e){
+      var n=-1;
+      if(e.key==="ArrowRight")n=(i+1)%tabs.length;
+      else if(e.key==="ArrowLeft")n=(i+tabs.length-1)%tabs.length;
+      else if(e.key==="Home")n=0;
+      else if(e.key==="End")n=tabs.length-1;
+      if(n>-1){e.preventDefault();tabs[n].focus();tabs[n].click()}
+    });
+  });
+  window.addEventListener("hashchange",function(){select(fromHash())});
+  select(fromHash());
+})();
+</script>
+
+</body></html>
