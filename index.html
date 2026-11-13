@@ -167,6 +167,53 @@ footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 16px;pa
   footer{display:grid;grid-template-columns:2fr 3fr 2fr;gap:0;padding:0}
   footer>*{padding:12px 16px}
 }
+/* bookshelf: the presence repository, on the same 7 columns */
+h2 .hl{background:var(--accent);color:#fff;padding:0 .1em;margin-left:-.05em}
+.orient{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--line);border-top:1px solid var(--line)}
+.orient>.tax:last-child{grid-column:1/-1}
+.tax{
+  appearance:none;border:0;border-radius:0;margin:0;cursor:pointer;
+  background:var(--bg);color:var(--fg);font:inherit;text-align:left;
+  padding:14px 12px 16px;min-height:112px;display:flex;flex-direction:column;gap:8px;align-items:flex-start;
+}
+.tax b{font-size:var(--fs-xs);font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.tax span{font-size:var(--fs-xs);line-height:1.5;color:var(--dim)}
+.tax:hover{background:var(--accent-soft)}
+.tax.active{background:var(--accent);color:#fff}
+.tax.active span{color:#fff}
+@media(min-width:760px){
+  .orient{grid-template-columns:repeat(7,minmax(0,1fr));gap:0;background:none}
+  .orient>.tax:last-child{grid-column:auto}
+}
+
+.tools{display:grid;grid-template-columns:minmax(0,1fr);gap:1px;background:var(--line);border-top:1px solid var(--line)}
+.tools>*{background:var(--bg)}
+.tools input,.tools select,.tools button{
+  font:inherit;font-size:var(--fs-base);color:var(--fg);background:var(--bg);
+  border:0;border-radius:0;margin:0;padding:14px 16px;width:100%;min-width:0;
+  -webkit-appearance:none;appearance:none;
+}
+.tools input::placeholder{color:var(--dim);opacity:1}
+.tools select{
+  padding-right:36px;cursor:pointer;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6'><path d='M0 0l5 6 5-6z' fill='%23111111'/></svg>");
+  background-repeat:no-repeat;background-position:right 16px center;
+}
+.tools button{cursor:pointer;text-align:left;font-size:var(--fs-xs);font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.tools button:hover,.tools select:hover{background-color:var(--accent-soft)}
+.count{padding:14px 16px;display:flex;align-items:center;font-size:var(--fs-xs);letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+@media(min-width:760px){
+  .tools{grid-template-columns:repeat(7,minmax(0,1fr));gap:0;background:none}
+  .tools>:nth-child(1){grid-column:1/4}
+  .tools>:nth-child(2){grid-column:4/6}
+  .tools>:nth-child(3){grid-column:6/7}
+  .tools>:nth-child(4){grid-column:7/8}
+}
+
+.art h3{font-size:var(--fs-base);font-weight:800;line-height:1.25;letter-spacing:-.01em;text-transform:uppercase}
+.art .by{display:block;margin-top:4px;font-size:var(--fs-xs);line-height:1.5;color:var(--dim)}
+.chip{display:inline-block;background:var(--accent-soft);color:var(--fg);padding:2px 6px;font-size:var(--fs-xs);font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.trow:not(.thead):hover .chip{background:var(--bg)}
 </style>
 </head>
 <body>
@@ -233,7 +280,58 @@ footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 16px;pa
       <div class="bar"><span>Assignment overview</span></div>
     </section>
 
-    <section id="panel-bookshelf" class="blank" role="tabpanel" aria-labelledby="tab-bookshelf" tabindex="0" hidden></section>
+    <section id="panel-bookshelf" role="tabpanel" aria-labelledby="tab-bookshelf" tabindex="0" hidden>
+      <div class="phead"><h2>Designed for <span class="hl">Presence</span></h2></div>
+      <div class="bar"><span>An interaction design repository</span><span>20 artifacts · 7 design orientations</span></div>
+      <div class="about"><div><p>Objects and interactions that invite dwelling, anticipation, interpretation, connection and meaningful coexistence — beyond efficient use.</p></div></div>
+
+      <div class="bar"><span>Seven orientations of presence</span></div>
+      <div class="about"><div><p>Browse by the relationship an artifact cultivates, not by whether it is physical or digital. Select an orientation to filter the collection.</p></div></div>
+      <div class="orient" id="bs-orient">
+        <button class="tax" data-filter="Temporal presence"><b>Temporal presence</b><span>Waiting, anticipation, revisitation</span></button>
+        <button class="tax" data-filter="Ambient presence"><b>Ambient presence</b><span>Noticing, sensing, becoming aware</span></button>
+        <button class="tax" data-filter="Domestic presence"><b>Domestic presence</b><span>Living alongside, coexisting, accepting</span></button>
+        <button class="tax" data-filter="Social presence"><b>Social presence</b><span>Connectedness, intimacy, reassurance</span></button>
+        <button class="tax" data-filter="Poetic presence"><b>Poetic presence</b><span>Wonder, interpretation, imagination</span></button>
+        <button class="tax" data-filter="Ludic presence"><b>Ludic presence</b><span>Exploration, curiosity, unhurried play</span></button>
+        <button class="tax" data-filter="Material presence"><b>Material presence</b><span>Touch, sensory engagement, material expression</span></button>
+      </div>
+
+      <div class="bar" id="bs-collection"><span>Artifact collection</span></div>
+      <div class="about"><div><p>Each entry includes the artifact, its designer(s), a short interaction description, and a link to the project or documentation.</p></div></div>
+      <div class="tools">
+        <input id="bs-search" type="search" placeholder="Search artifacts, designers, interactions…" aria-label="Search artifacts">
+        <select id="bs-category" aria-label="Filter by orientation"><option value="">All orientations</option><option value="Temporal presence">Temporal presence</option><option value="Ambient presence">Ambient presence</option><option value="Domestic presence">Domestic presence</option><option value="Social presence">Social presence</option><option value="Poetic presence">Poetic presence</option><option value="Ludic presence">Ludic presence</option><option value="Material presence">Material presence</option></select>
+        <button type="button" id="bs-reset">Clear filters</button>
+        <div class="count" id="bs-count" aria-live="polite"></div>
+      </div>
+      <div class="tbl" id="bs-rows" style="--cols:minmax(0,2fr) minmax(0,3fr) minmax(0,1fr) minmax(0,1fr)">
+        <div class="trow thead"><div>Artifact</div><div>Description</div><div>Orientation</div><div>Link</div></div>
+        <div class="trow" data-category="Temporal presence" data-search="olly will odom, ron wakkary and collaborators temporal presence a wooden-disc music player that resurfaces songs from listening history. the disc slowly rotates; spinning it plays a song, inviting encounters with musical memories."><div class="art"><h3>Olly</h3><span class="by">Will Odom, Ron Wakkary and collaborators</span></div><div data-label="Description">A wooden-disc music player that resurfaces songs from listening history. The disc slowly rotates; spinning it plays a song, inviting encounters with musical memories.</div><div data-label="Orientation"><span class="chip">Temporal presence</span></div><div data-label="Link"><a href="https://observatory.designresearch.works/projects/olly" target="_blank" rel="noopener noreferrer">Access artifact / documentation ↗</a></div></div>
+        <div class="trow" data-category="Domestic presence" data-search="table-non-table will odom, ron wakkary, audrey desjardins and collaborators domestic presence a stack of paper on a motorised chassis that occasionally moves. people live alongside it and may use it as a table, stool or drawing surface."><div class="art"><h3>Table-non-table</h3><span class="by">Will Odom, Ron Wakkary, Audrey Desjardins and collaborators</span></div><div data-label="Description">A stack of paper on a motorised chassis that occasionally moves. People live alongside it and may use it as a table, stool or drawing surface.</div><div data-label="Orientation"><span class="chip">Domestic presence</span></div><div data-label="Link"><a href="https://www.audreydesjardins.com/research/table-non-table.html" target="_blank" rel="noopener noreferrer">Access artifact / documentation ↗</a></div></div>
+        <div class="trow" data-category="Temporal presence" data-search="slow doorbell lars hallnäs and johan redström temporal presence a conceptual doorbell that plays a fragment of a longer musical composition each time it is pressed. the piece unfolds through repeated visits over time."><div class="art"><h3>Slow Doorbell</h3><span class="by">Lars Hallnäs and Johan Redström</span></div><div data-label="Description">A conceptual doorbell that plays a fragment of a longer musical composition each time it is pressed. The piece unfolds through repeated visits over time.</div><div data-label="Orientation"><span class="chip">Temporal presence</span></div><div data-label="Link"><a href="https://www.homewarelab.com/assets/pdfs/odom---2024---illustrating%2C-annotating-%26-extending-design-qualit.pdf" target="_blank" rel="noopener noreferrer">Access artifact / documentation ↗</a></div></div>
+        <div class="trow" data-category="Ludic presence" data-search="drift table william gaver and interaction research studio ludic presence a coffee table displaying slowly drifting aerial imagery. placing and moving objects on its surface changes its virtual flight, inviting leisurely exploration without a destination."><div class="art"><h3>Drift Table</h3><span class="by">William Gaver and Interaction Research Studio</span></div><div data-label="Description">A coffee table displaying slowly drifting aerial imagery. Placing and moving objects on its surface changes its virtual flight, inviting leisurely exploration without a destination.</div><div data-label="Orientation"><span class="chip">Ludic presence</span></div><div data-label="Link"><a href="https://research.northumbria.ac.uk/irs/the-drift-table/" target="_blank" rel="noopener noreferrer">Access artifact / documentation ↗</a></div></div>
+        <div class="trow" data-category="Temporal presence" data-search="slow game william odom, henry lin, garnet hertz and ron wakkary temporal presence a physical version of snake played by rotating a light-up cube, with only one move allowed per day. players anticipate the next move between sessions."><div class="art"><h3>Slow Game</h3><span class="by">William Odom, Henry Lin, Garnet Hertz and Ron Wakkary</span></div><div data-label="Description">A physical version of Snake played by rotating a light-up cube, with only one move allowed per day. Players anticipate the next move between sessions.</div><div data-label="Orientation"><span class="chip">Temporal presence</span></div><div data-label="Link"><a href="https://willodom.com/portfolio/portfolio/slow-game/" target="_blank" rel="noopener noreferrer">Access artifact / documentation ↗</a></div></div>
+        <div class="trow" data-category="Ambient presence" data-search="ambientroom / ghostly presence hiroshi ishii and collaborators ambient presence an augmented room that expresses information and remote activity through changes in light, sound, air and water, creating peripheral awareness."><div class="art"><h3>ambientROOM / Ghostly Presence</h3><span class="by">Hiroshi Ishii and collaborators</span></div><div data-label="Description">An augmented room that expresses information and remote activity through changes in light, sound, air and water, creating peripheral awareness.</div><div data-label="Orientation"><span class="chip">Ambient presence</span></div><div data-label="Link"><a href="https://tangible.media.mit.edu/project/ambientroom/" target="_blank" rel="noopener noreferrer">Access artifact / documentation ↗</a></div></div>
+        <div class="trow" data-category="Ambient presence" data-search="indoor weather stations william gaver and interaction research studio ambient presence a set of domestic devices that express subtle changes in light, temperature and airflow, encouraging residents to notice their microclimate."><div class="art"><h3>Indoor Weather Stations</h3><span class="by">William Gaver and Interaction Research Studio</span></div><div data-label="Description">A set of domestic devices that express subtle changes in light, temperature and airflow, encouraging residents to notice their microclimate.</div><div data-label="Orientation"><span class="chip">Ambient presence</span></div><div data-label="Link"><a href="https://doi.org/10.1145/2470654.2466474" target="_blank" rel="noopener noreferrer">Access artifact / documentation ↗</a></div></div>
+        <div class="trow" data-category="Social presence" data-search="telematic balcony fiona raby social presence a balcony-like structure that opens an audio connection to other places as someone approaches, giving remote connection an architectural presence."><div class="art"><h3>Telematic Balcony</h3><span class="by">Fiona Raby</span></div><div data-label="Description">A balcony-like structure that opens an audio connection to other places as someone approaches, giving remote connection an architectural presence.</div><div data-label="Orientation"><span class="chip">Social presence</span></div><div data-label="Link"><a href="https://cast.b-ap.net/wp-content/uploads/sites/8/2011/09/Dunne_postoptimalObject.pdf" target="_blank" rel="noopener noreferrer">Access artifact / documentation ↗</a></div></div>
+        <div class="trow" data-category="Material presence" data-search="radio in a bag daniel weil material presence a functioning radio with components visibly arranged inside a transparent bag, turning circuitry and wiring into part of the object’s expression."><div class="art"><h3>Radio in a Bag</h3><span class="by">Daniel Weil</span></div><div data-label="Description">A functioning radio with components visibly arranged inside a transparent bag, turning circuitry and wiring into part of the object’s expression.</div><div data-label="Orientation"><span class="chip">Material presence</span></div><div data-label="Link"><a href="https://cast.b-ap.net/wp-content/uploads/sites/8/2011/09/Dunne_postoptimalObject.pdf" target="_blank" rel="noopener noreferrer">Access artifact / documentation ↗</a></div></div>
+        <div class="trow" data-category="Poetic presence" data-search="placebo project anthony dunne and fiona raby poetic presence eight experimental electronic objects placed in homes to provoke interpretations of invisible electromagnetic phenomena and everyday technological life."><div class="art"><h3>Placebo Project</h3><span class="by">Anthony Dunne and Fiona Raby</span></div><div data-label="Description">Eight experimental electronic objects placed in homes to provoke interpretations of invisible electromagnetic phenomena and everyday technological life.</div><div data-label="Orientation"><span class="chip">Poetic presence</span></div><div data-label="Link"><a href="https://dunneandraby.co.uk/content/projects/70/0" target="_blank" rel="noopener noreferrer">Access artifact / documentation ↗</a></div></div>
+        <div class="trow" data-category="Social presence" data-search="energy babble william gaver, mike michael and collaborators social presence a networked audio object that plays a shifting mix of voices and commentary about energy, encouraging listening and community conversation rather than efficient information retrieval."><div class="art"><h3>Energy Babble</h3><span class="by">William Gaver, Mike Michael and collaborators</span></div><div data-label="Description">A networked audio object that plays a shifting mix of voices and commentary about energy, encouraging listening and community conversation rather than efficient information retrieval.</div><div data-label="Orientation"><span class="chip">Social presence</span></div><div data-label="Link"><a href="https://www.matteringpress.org/books/energy-babble" target="_blank" rel="noopener noreferrer">Access artifact / documentation ↗</a></div></div>
+        <div class="trow" data-category="Poetic presence" data-search="hertzian tales anthony dunne and fiona raby poetic presence a body of conceptual electronic designs that makes the invisible electromagnetic environment available to imagination and critique."><div class="art"><h3>Hertzian Tales</h3><span class="by">Anthony Dunne and Fiona Raby</span></div><div data-label="Description">A body of conceptual electronic designs that makes the invisible electromagnetic environment available to imagination and critique.</div><div data-label="Orientation"><span class="chip">Poetic presence</span></div><div data-label="Link"><a href="https://researchonline.rca.ac.uk/5943/2/PHD%20Thesis%20Anthony%20Dunne%201997%20Illustrations.pdf" target="_blank" rel="noopener noreferrer">Access artifact / documentation ↗</a></div></div>
+        <div class="trow" data-category="Material presence" data-search="clock daniel weil material presence a clock that exposes and composes its circuitry, using large boards and everyday objects as electrical connections."><div class="art"><h3>Clock</h3><span class="by">Daniel Weil</span></div><div data-label="Description">A clock that exposes and composes its circuitry, using large boards and everyday objects as electrical connections.</div><div data-label="Orientation"><span class="chip">Material presence</span></div><div data-label="Link"><a href="https://cast.b-ap.net/wp-content/uploads/sites/8/2011/09/Dunne_postoptimalObject.pdf" target="_blank" rel="noopener noreferrer">Access artifact / documentation ↗</a></div></div>
+        <div class="trow" data-category="Temporal presence" data-search="crescendomessage chen and collaborators temporal presence a research photo-messaging concept where an obscured photograph gradually becomes clear, transforming delivery into anticipation."><div class="art"><h3>CrescendoMessage</h3><span class="by">Chen and collaborators</span></div><div data-label="Description">A research photo-messaging concept where an obscured photograph gradually becomes clear, transforming delivery into anticipation.</div><div data-label="Orientation"><span class="chip">Temporal presence</span></div><div data-label="Link"><a href="https://www.homewarelab.com/assets/pdfs/odom---2024---illustrating%2C-annotating-%26-extending-design-qualit.pdf" target="_blank" rel="noopener noreferrer">Access artifact / documentation ↗</a></div></div>
+        <div class="trow" data-category="Temporal presence" data-search="photobox will odom and collaborators temporal presence an oak chest that unpredictably prints a photo from its owner’s online archive, encouraging surprise, memory and revisitation."><div class="art"><h3>Photobox</h3><span class="by">Will Odom and collaborators</span></div><div data-label="Description">An oak chest that unpredictably prints a photo from its owner’s online archive, encouraging surprise, memory and revisitation.</div><div data-label="Orientation"><span class="chip">Temporal presence</span></div><div data-label="Link"><a href="https://willodom.com/portfolio/portfolio/field-study-of-photobox/" target="_blank" rel="noopener noreferrer">Access artifact / documentation ↗</a></div></div>
+        <div class="trow" data-category="Social presence" data-search="whereabouts clock abigail sellen, alex taylor, joseph kaye and collaborators social presence a home display that shows family members’ approximate whereabouts as moving icons, supporting a sense of reassurance and connectedness."><div class="art"><h3>Whereabouts Clock</h3><span class="by">Abigail Sellen, Alex Taylor, Joseph Kaye and collaborators</span></div><div data-label="Description">A home display that shows family members’ approximate whereabouts as moving icons, supporting a sense of reassurance and connectedness.</div><div data-label="Orientation"><span class="chip">Social presence</span></div><div data-label="Link"><a href="https://www.microsoft.com/en-us/research/publication/supporting-family-awareness-whereabouts-clock/" target="_blank" rel="noopener noreferrer">Access artifact / documentation ↗</a></div></div>
+        <div class="trow" data-category="Material presence" data-search="stroke lamp alberto meda and denis santachiara material presence a lamp controlled by stroking its surface, foregrounding touch and sensory engagement with an everyday electronic object."><div class="art"><h3>Stroke Lamp</h3><span class="by">Alberto Meda and Denis Santachiara</span></div><div data-label="Description">A lamp controlled by stroking its surface, foregrounding touch and sensory engagement with an everyday electronic object.</div><div data-label="Orientation"><span class="chip">Material presence</span></div><div data-label="Link"><a href="https://cast.b-ap.net/wp-content/uploads/sites/8/2011/09/Dunne_postoptimalObject.pdf" target="_blank" rel="noopener noreferrer">Access artifact / documentation ↗</a></div></div>
+        <div class="trow" data-category="Material presence" data-search="leaf electroluminescent lamp andrea branzi material presence a leaf-shaped lamp using electroluminescent material to explore cultural and aesthetic expression rather than lighting efficiency alone."><div class="art"><h3>Leaf Electroluminescent Lamp</h3><span class="by">Andrea Branzi</span></div><div data-label="Description">A leaf-shaped lamp using electroluminescent material to explore cultural and aesthetic expression rather than lighting efficiency alone.</div><div data-label="Orientation"><span class="chip">Material presence</span></div><div data-label="Link"><a href="https://cast.b-ap.net/wp-content/uploads/sites/8/2011/09/Dunne_postoptimalObject.pdf" target="_blank" rel="noopener noreferrer">Access artifact / documentation ↗</a></div></div>
+        <div class="trow" data-category="Poetic presence" data-search="gps table anthony dunne and fiona raby poetic presence a table that displays its geographical position and registers being “lost” indoors, inviting anthropomorphic interpretations of a technological object."><div class="art"><h3>GPS Table</h3><span class="by">Anthony Dunne and Fiona Raby</span></div><div data-label="Description">A table that displays its geographical position and registers being “lost” indoors, inviting anthropomorphic interpretations of a technological object.</div><div data-label="Orientation"><span class="chip">Poetic presence</span></div><div data-label="Link"><a href="https://dunneandraby.co.uk/content/projects/70/0" target="_blank" rel="noopener noreferrer">Access artifact / documentation ↗</a></div></div>
+        <div class="trow" data-category="Poetic presence" data-search="compass table anthony dunne and fiona raby poetic presence a table containing compasses that respond to electromagnetic fields, making invisible forces part of everyday interpretation."><div class="art"><h3>Compass Table</h3><span class="by">Anthony Dunne and Fiona Raby</span></div><div data-label="Description">A table containing compasses that respond to electromagnetic fields, making invisible forces part of everyday interpretation.</div><div data-label="Orientation"><span class="chip">Poetic presence</span></div><div data-label="Link"><a href="https://dunneandraby.co.uk/content/projects/70/0" target="_blank" rel="noopener noreferrer">Access artifact / documentation ↗</a></div></div>
+      </div>
+
+      <div class="bar"><span>Curatorial note</span></div>
+      <div class="about"><div><p>Presence here means an object acquiring a meaningful place in everyday life, not simply being physically present or ambient. The classification is interpretive: many works could fit more than one orientation. Some entries are research prototypes, concepts, or project families rather than commercially accessible products; access links may lead to documentation instead of a working artifact.</p><p><strong>Conceptual foundations:</strong> Lars Hallnäs & Johan Redström (2002), <em>From Use to Presence: On the Expressions and Aesthetics of Everyday Computational Things</em>; Anthony Dunne, <em>The Electronic as Post-optimal Object</em>, in <em>Hertzian Tales</em>. Photobox is retained as a reference example alongside the newly identified works.</p></div><div><p>Prepared as a working research repository. External links should be checked before formal publication.</p></div></div>
+    </section>
 
     <section id="panel-resources" class="blank" role="tabpanel" aria-labelledby="tab-resources" tabindex="0" hidden></section>
   </main>
@@ -281,6 +379,33 @@ footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 16px;pa
   });
   window.addEventListener("hashchange",function(){select(fromHash())});
   select(fromHash());
+})();
+</script>
+<script>
+(function(){
+  var rows=Array.prototype.slice.call(document.querySelectorAll('#bs-rows .trow[data-search]')),
+      search=document.getElementById("bs-search"),
+      select=document.getElementById("bs-category"),
+      count=document.getElementById("bs-count"),
+      taxes=Array.prototype.slice.call(document.querySelectorAll("#bs-orient .tax"));
+  function update(){
+    var q=search.value.trim().toLowerCase(),c=select.value,n=0;
+    rows.forEach(function(el){
+      var ok=(!c||el.dataset.category===c)&&(!q||el.dataset.search.indexOf(q)>-1);
+      el.hidden=!ok;if(ok)n++;
+    });
+    count.textContent=n+" of "+rows.length+" artifacts";
+    taxes.forEach(function(el){el.classList.toggle("active",el.dataset.filter===c)});
+  }
+  search.addEventListener("input",update);
+  select.addEventListener("change",update);
+  taxes.forEach(function(el){el.addEventListener("click",function(){
+    select.value=select.value===el.dataset.filter?"":el.dataset.filter;
+    update();
+    document.getElementById("bs-collection").scrollIntoView({behavior:"smooth",block:"start"});
+  })});
+  document.getElementById("bs-reset").addEventListener("click",function(){search.value="";select.value="";update()});
+  update();
 })();
 </script>
 </body>
